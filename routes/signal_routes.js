@@ -1,32 +1,40 @@
 var _ = require('lodash');
 
-module.exports = function(app, express, router){
+
+module.exports = function(app, express, router, auth, firebase){
 
     // route to show a random message (GET http://localhost:8080/api/)
     router.get('/signals', function(req, res) {
       res.json({ message: 'signals api' });
     });
 
-    router.post('/signals', function(req, res) {
+    router.post('/signals', auth, function(req, res) {
       //console.log(req.body.arr[0]); //array
-      var signal = req.body.signal;
+      var sig = req.body.signal;
       var currency = req.body.currency;
       var description = req.body.description;
       var stoploss = req.body.stoploss;
       var takeprofit = req.body.takeprofit;
 
-      res.json({ 
-            signal: signal,
-            currency: currency,
-            description: description,
-            stoploss: stoploss,
-            takeprofit: takeprofit
-        });
+      var signal = {    signal: sig,
+                        currency: currency,
+                        description: description,
+                        stoploss: stoploss,
+                        takeprofit: takeprofit
+                   };
+
+      var db = firebase.database();
+      var ref = db.ref("test");
+      ref.set({"hello":"hello"});
+
+      res.json(signal);
     });
 
     // route to return all users (GET http://localhost:8080/api/users)
     router.get('/beats', function(req, res) {
+        
         res.json({ message: 'beats api' });
+
         //console.log(req.body.arr[0]);
         /*var user_id = req.query.user_id;
         console.log("userid: " + user_id);

@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var moment = require('moment');
 
 
 module.exports = function(app, express, router, auth, firebase){
@@ -15,18 +16,20 @@ module.exports = function(app, express, router, auth, firebase){
       var description = req.body.description;
       var stoploss = req.body.stoploss;
       var takeprofit = req.body.takeprofit;
+      var timestamp = moment().valueOf();
 
-      var signal = {    signal: sig,
-                        currency: currency,
-                        description: description,
-                        stoploss: stoploss,
-                        takeprofit: takeprofit
+      var signal = {    
+                      signal: sig,
+                      currency: currency,
+                      description: description,
+                      stoploss: stoploss,
+                      takeprofit: takeprofit,
+                      timestamp: timestamp
                    };
 
       var db = firebase.database();
       var ref = db.ref("signals");
-      ref.set(signal);
-
+      ref.push().set(signal);
       res.json(signal);
     });
 

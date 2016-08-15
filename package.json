@@ -10,10 +10,11 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "body-parser": "~1.0.1",
     "ejs": "2.4.1",
     "express": "~4.0.0",
-    "mongoose": "~3.6.13",
-    "body-parser": "~1.0.1"
+    "lodash": "^4.15.0",
+    "mongoose": "~3.6.13"
   },
   "repository": {
     "type": "git",

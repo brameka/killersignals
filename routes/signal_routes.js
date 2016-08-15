@@ -24,8 +24,8 @@ module.exports = function(app, express, router, auth, firebase){
                    };
 
       var db = firebase.database();
-      var ref = db.ref("test");
-      ref.set({"hello":"hello"});
+      var ref = db.ref("signals");
+      ref.set(signal);
 
       res.json(signal);
     });

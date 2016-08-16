@@ -58,12 +58,14 @@ module.exports = function(app, express, router, auth, db, notifier){
       var id = req.params.id;
       var ref = db.ref("signals");
 
-      ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {
-        var refer = db.ref("/signals");
-        var child = refer.child(snapshot.key());
-        child.update({
-              status: "closed"
-          });
+
+      ref.orderByChild("id").equalTo("123").once("value", function(snapshot) {
+        snapshot.forEach(function(data) {
+            var refer = ref.child(data.key());
+            refer.update({
+                status: "closed"
+            });
+        });
       });
 
       res.json({ message: id });

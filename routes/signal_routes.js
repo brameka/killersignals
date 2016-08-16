@@ -66,11 +66,11 @@ module.exports = function(app, express, router, auth, firebase, notifier){
           signalRef.update({
               status: "updated"
           });
+          res.json({ message: "updated" });
       }, function (err) {
-          console.log("The read failed: " + err.code);
+          res.json({ message: err.code });
       });
-
-      res.json({ id: id });
+      
     });
 
     router.get('/beats', function(req, res) {

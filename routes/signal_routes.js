@@ -57,7 +57,7 @@ module.exports = function(app, express, router, auth, notifier){
       var data = {
                     status: "closed"
                 };
-      fireservice.save(signal);
+      fireservice.update(data);
 
 
       /*ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {

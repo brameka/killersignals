@@ -56,19 +56,22 @@ module.exports = function(app, express, router, auth, db, notifier){
 
     router.post('/signal/:id', auth, function(req, res) {
       var id = req.params.id;
-      var ref = db.ref("signals");
+      var ref = db.ref("signals/-KPHLUquXdsGk0WFxejC");
+      ref.update({
+        status: "closed"
+      })
       
-      ref.orderByChild("id").equalTo(id).on("value", function(snapshot){
+      /*ref.orderByChild("id").equalTo(id).on("value", function(snapshot){
           //var values = snapshot.val();
           var child = db.ref("/signals/" + snapshot.key());
           //var signalRef = ref.child(snapshot.key());
           child.set({
               status: "closed"
           });
-          
+
       });
 
-      res.json({ message: id });
+      res.json({ message: id });*/
 
       
     });

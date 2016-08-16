@@ -58,12 +58,14 @@ module.exports = function(app, express, router, auth, db, notifier){
       var id = req.params.id;
       var ref = db.ref("signals");
       
-      ref.orderByChild("id").equalTo(id).on("child_added", function(snapshot){
+      ref.orderByChild("id").equalTo(id).on("value", function(snapshot){
           //var values = snapshot.val();
-          var signalRef = this.ref.child(snapshot.key());
-          signalRef.set({
+          var child = db.ref("/signals/" + snapshot.key());
+          //var signalRef = ref.child(snapshot.key());
+          child.set({
               status: "closed"
           });
+          
       });
 
       res.json({ message: id });

@@ -69,11 +69,9 @@ module.exports = function(app, express, router, auth, db, notifier){
               status: "closed"
           });
 
-      });
+      });*/
 
-      res.json({ message: id });*/
-
-      
+      res.json({ message: id });
     });
 
     router.get('/beats', function(req, res) {

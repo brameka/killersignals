@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var basicAuth = require('basic-auth-connect');
 var firebase = require("firebase");
 
+
 // Initialize Firebase
 /*var config = {
     apiKey: "AIzaSyCDcC8RdtDVLu09K4s2Aaa5ncwkv9CjE38",
@@ -26,6 +27,12 @@ firebase.initializeApp({
     uid: "killjoyapi"
   }
 });
+
+
+//firebase xmpp fcm server
+//fcm-xmpp.googleapis.com:5235 //LIVE
+//fcm-xmpp.googleapis.com:5236 //DEV
+
 
 
 /*var uid = "R9JIJZUgWHaTz27zN7vIs2xv27C2";
@@ -47,7 +54,10 @@ var port = process.env.PORT || 8080;        // set our port
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
-var signal_routes = require("./routes/signal_routes")(app, express, router, auth, firebase);
+
+var notifier = require("./app/notifier")(app);
+
+var signal_routes = require("./routes/signal_routes")(app, express, router, auth, firebase, notifier);
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {

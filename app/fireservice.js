@@ -16,7 +16,14 @@ module.exports = function(){
       ref.push().set(signal);
   }
 
+  var update = function(payload){
+     var db = firebase.database();
+     var ref = db.ref("/signals/-KPHhiunXDNNkTBVEpja");
+     ref.update(payload);
+  }
+
   return {
-    save: save
+    save: save,
+    update: update
   }
 }

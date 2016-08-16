@@ -54,17 +54,18 @@ module.exports = function(app, express, router, auth, notifier){
 
     router.post('/signal/:id', auth, function(req, res) {
       var id = req.params.id;
-      var ref = db.ref("signals");
+      var data = {
+                    status: "closed"
+                };
+      fireservice.save(signal);
 
 
-      ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {
+      /*ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {
         snapshot.forEach(function(data) {
             var refer = ref.child(data.key());
-            refer.update({
-                status: "closed"
-            });
+            refer.update();
         });
-      });
+      });*/
 
       res.json({ message: id });
     });

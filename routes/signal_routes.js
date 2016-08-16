@@ -24,7 +24,6 @@ module.exports = function(app, express, router, auth, notifier){
       var timestamp = moment().valueOf();
 
       var signal = {
-                      id: id,
                       signalId: signalId,
                       name: name,
                       currency: currency,
@@ -47,7 +46,7 @@ module.exports = function(app, express, router, auth, notifier){
                    };*/
 
       //notifier.send(signal);
-      fireservice.save(signal);
+      fireservice.save(id, signal);
       
       res.json(signal);
     });

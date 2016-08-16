@@ -10,10 +10,10 @@ module.exports = function(){
     }
   });
 
-  var save = function(signal){
+  var save = function(id, signal){
       var db = firebase.database();
-      var ref = db.ref("signals");
-      ref.push().set(signal);
+      var ref = db.ref("/signals/" + id);
+      ref.set(signal);
   }
 
   var update = function(id, payload){

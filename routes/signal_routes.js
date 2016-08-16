@@ -60,7 +60,7 @@ module.exports = function(app, express, router, auth, firebase, notifier){
       var db = firebase.database();
       var ref = db.ref("signals");
       
-      ref.orderByChild("id").equalTo(id).on("child_added", function(snapshot){
+      ref.orderByChild("id").equalTo("xxx").on("child_added", function(snapshot){
           //var values = snapshot.val();
           var signalRef = ref.child(snapshot.key());
           signalRef.update({

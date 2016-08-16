@@ -23,7 +23,17 @@ module.exports = function(app, express, router, auth, firebase, notifier){
       var timestamp = moment().valueOf();
       var id = req.body.id;
 
-      var signal = {};
+      var signal = {
+                      id: id,
+                      signal: sig,
+                      currency: currency,
+                      description: description,
+                      stoploss: stoploss,
+                      takeprofit: takeprofit,
+                      timestamp: timestamp
+                    };
+
+      /*var signal = {};
       signal[id] = {    
                       signal: sig,
                       currency: currency,
@@ -31,15 +41,15 @@ module.exports = function(app, express, router, auth, firebase, notifier){
                       stoploss: stoploss,
                       takeprofit: takeprofit,
                       timestamp: timestamp
-                   };
+                   };*/
 
       //notifier.send(signal);
 
       var db = firebase.database();
       var ref = db.ref("signals");
-      ref.set(signal);
-      //ref.push().set(signal);
-      res.json(signal);
+      //ref.set(signal);
+      ref.push().set(signal);
+      //res.json(signal);
     });
 
     router.get('/beats', function(req, res) {

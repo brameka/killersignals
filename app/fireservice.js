@@ -18,15 +18,16 @@ module.exports = function(){
 
   var update = function(id, payload){
      var db = firebase.database();
-     var ref = db.ref("/signals");
+     var ref = db.ref("/signals/" + id);
+     ref.update(payload);
 
-     ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {
+     /*ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {
         snapshot.forEach(function(data) {
             var dbs = firebase.database();
             var refs = dbs.ref("/signals/" + data.key());
             refs.update();
         });
-    });
+    });*/
 
 
      //ref.update(payload);

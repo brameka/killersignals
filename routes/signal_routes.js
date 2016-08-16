@@ -3,7 +3,7 @@ var moment = require('moment');
 
 
 
-module.exports = function(app, express, router, auth, firebase, notifier){
+module.exports = function(app, express, router, auth, db, notifier){
 
     router.get('/signals', function(req, res) {
       res.json({ message: 'signals api' });
@@ -49,7 +49,6 @@ module.exports = function(app, express, router, auth, firebase, notifier){
 
       //notifier.send(signal);
 
-      var db = firebase.database();
       var ref = db.ref("signals");
       ref.push().set(signal);
       res.json(signal);
@@ -57,7 +56,6 @@ module.exports = function(app, express, router, auth, firebase, notifier){
 
     router.post('/signal/:id', auth, function(req, res) {
       var id = req.params.id;
-      var db = firebase.database();
       var ref = db.ref("signals");
       
       ref.orderByChild("id").equalTo("223").on("child_added", function(snapshot){

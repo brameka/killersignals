@@ -57,7 +57,9 @@ var router = express.Router();              // get an instance of the express Ro
 
 var notifier = require("./app/notifier")(app);
 
-var signal_routes = require("./routes/signal_routes")(app, express, router, auth, firebase, notifier);
+var db = firebase.database();
+
+var signal_routes = require("./routes/signal_routes")(app, express, router, auth, db, notifier);
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {

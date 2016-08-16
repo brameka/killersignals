@@ -12,15 +12,19 @@ module.exports = function(app, express, router, auth, firebase, notifier){
     router.post('/signals', auth, function(req, res) {
       
       //console.log(req.body.arr[0]); //array
+      console.log(req.body);
       
+      var id = req.body.id;
       var sig = req.body.signal;
       var currency = req.body.currency;
       var description = req.body.description;
       var stoploss = req.body.stoploss;
       var takeprofit = req.body.takeprofit;
       var timestamp = moment().valueOf();
+      var id = req.body.id;
 
-      var signal = {    
+      var signal = {};
+      signal[id] = {    
                       signal: sig,
                       currency: currency,
                       description: description,
@@ -28,11 +32,13 @@ module.exports = function(app, express, router, auth, firebase, notifier){
                       takeprofit: takeprofit,
                       timestamp: timestamp
                    };
+
       //notifier.send(signal);
 
       var db = firebase.database();
       var ref = db.ref("signals");
-      ref.push().set(signal);
+      ref.set(signal);
+      //ref.push().set(signal);
       res.json(signal);
     });
 

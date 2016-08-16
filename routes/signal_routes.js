@@ -60,10 +60,10 @@ module.exports = function(app, express, router, auth, db, notifier){
       
       ref.orderByChild("id").equalTo(id).on("child_added", function(snapshot){
           //var values = snapshot.val();
-          //var signalRef = ref.child(snapshot.key());
-          //signalRef.update({
-          //    status: "closed"
-          //});
+          var signalRef = this.ref.child(snapshot.key());
+          signalRef.set({
+              status: "closed"
+          });
       });
 
       res.json({ message: id });

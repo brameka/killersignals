@@ -55,9 +55,9 @@ module.exports = function(app, express, router, auth, notifier){
     router.post('/signal/:id', auth, function(req, res) {
       var id = req.params.id;
       var data = {
-                    status: "closed"
+                    status: "fight"
                 };
-      fireservice.update(data);
+      fireservice.update(id, data);
 
 
       /*ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {

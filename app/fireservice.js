@@ -16,10 +16,20 @@ module.exports = function(){
       ref.push().set(signal);
   }
 
-  var update = function(payload){
+  var update = function(id, payload){
      var db = firebase.database();
-     var ref = db.ref("/signals/-KPHhiunXDNNkTBVEpja");
-     ref.update(payload);
+     var ref = db.ref("/signals");
+
+     ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {
+        snapshot.forEach(function(data) {
+            var dbs = firebase.database();
+            var refs = dbs.ref("/signals/" + data.key());
+            refs.update();
+        });
+    });
+
+
+     //ref.update(payload);
   }
 
   return {

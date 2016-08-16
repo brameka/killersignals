@@ -55,6 +55,19 @@ module.exports = function(app, express, router, auth, firebase, notifier){
       res.json(signal);
     });
 
+    router.post('/signal/:id', auth, function(req, res) {
+      var id = req.params.id;
+      var db = firebase.database();
+      var ref = db.ref("signals");
+      ref.orderByChild("id").equalTo(id).limitToFirst(1).on("child_added", function(snapshot){
+          var signalRef = ref.child(snapshot.key);
+          signalRef.update({
+              status: "updated"
+          });
+      });
+      res.json({ id: id });
+    });
+
     router.get('/beats', function(req, res) {
         
         res.json({ message: 'beats api' });

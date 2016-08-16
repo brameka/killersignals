@@ -8,7 +8,7 @@ var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var basicAuth = require('basic-auth-connect');
-var firebase = require("firebase");
+
 
 
 // Initialize Firebase
@@ -20,13 +20,7 @@ var firebase = require("firebase");
 };
 firebase.initializeApp(config);*/
 
-firebase.initializeApp({
-  databaseURL: "https://killjoy-fa82b.firebaseio.com",
-  serviceAccount: "./auth/Killjoy-14f8d081e9fd.json",
-  databaseAuthVariableOverride: {
-    uid: "killjoyapi"
-  }
-});
+
 
 
 //firebase xmpp fcm server
@@ -57,9 +51,8 @@ var router = express.Router();              // get an instance of the express Ro
 
 var notifier = require("./app/notifier")(app);
 
-var db = firebase.database();
 
-var signal_routes = require("./routes/signal_routes")(app, express, router, auth, db, notifier);
+var signal_routes = require("./routes/signal_routes")(app, express, router, auth, notifier);
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {

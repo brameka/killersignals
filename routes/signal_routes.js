@@ -1,9 +1,8 @@
 var _ = require('lodash');
 var moment = require('moment');
+var fireservice = require('../app/fireservice');
 
-
-
-module.exports = function(app, express, router, auth, db, notifier){
+module.exports = function(app, express, router, auth, notifier){
 
     router.get('/signals', function(req, res) {
       res.json({ message: 'signals api' });
@@ -48,9 +47,8 @@ module.exports = function(app, express, router, auth, db, notifier){
                    };*/
 
       //notifier.send(signal);
-
-      var ref = db.ref("signals");
-      ref.push().set(signal);
+      fireservice.save(signal);
+      
       res.json(signal);
     });
 
@@ -59,7 +57,7 @@ module.exports = function(app, express, router, auth, db, notifier){
       var ref = db.ref("signals");
 
 
-      ref.orderByChild("id").equalTo("123").once("value", function(snapshot) {
+      ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {
         snapshot.forEach(function(data) {
             var refer = ref.child(data.key());
             refer.update({

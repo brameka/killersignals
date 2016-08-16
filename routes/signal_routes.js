@@ -47,9 +47,8 @@ module.exports = function(app, express, router, auth, firebase, notifier){
 
       var db = firebase.database();
       var ref = db.ref("signals");
-      //ref.set(signal);
       ref.push().set(signal);
-      //res.json(signal);
+      res.json(signal);
     });
 
     router.get('/beats', function(req, res) {

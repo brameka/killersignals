@@ -10,26 +10,30 @@ module.exports = function(app, express, router, auth, firebase, notifier){
     });
 
     router.post('/signals', auth, function(req, res) {
-      
+    
       //console.log(req.body.arr[0]); //array
-      console.log(req.body);
       
       var id = req.body.id;
-      var sig = req.body.signal;
+      var name = req.body.name;
       var currency = req.body.currency;
       var description = req.body.description;
       var stoploss = req.body.stoploss;
       var takeprofit = req.body.takeprofit;
+      var signalId = req.body.signalId;
+      var status = req.body.status;
+      var price = req.body.price;
       var timestamp = moment().valueOf();
-      var id = req.body.id;
 
       var signal = {
                       id: id,
-                      signal: sig,
+                      signalId: signalId,
+                      name: name,
                       currency: currency,
                       description: description,
                       stoploss: stoploss,
                       takeprofit: takeprofit,
+                      status: status,
+                      price: price,
                       timestamp: timestamp
                     };
 

@@ -1,6 +1,6 @@
 var _ = require('lodash');
 var moment = require('moment');
-var fireservice = require('../app/fireservice');
+var fireservice = require('../app/fireservice')();
 
 module.exports = function(app, express, router, auth, notifier){
 

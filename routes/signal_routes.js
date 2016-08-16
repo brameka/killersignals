@@ -59,18 +59,21 @@ module.exports = function(app, express, router, auth, firebase, notifier){
       var id = req.params.id;
       var db = firebase.database();
       var ref = db.ref("signals");
-      ref.orderByChild("id").equalTo(id).limitToFirst(1).on("child_added", function(snapshot){
-          var signalRef = ref.child(snapshot.key);
+      
+      ref.orderByChild("id").equalTo(id).on("child_added", function(snapshot){
+          //var values = snapshot.val();
+          var signalRef = ref.child(snapshot.key());
           signalRef.update({
               status: "updated"
           });
+      }, function (err) {
+          console.log("The read failed: " + err.code);
       });
+
       res.json({ id: id });
     });
 
     router.get('/beats', function(req, res) {
-        
         res.json({ message: 'beats api' });
-        
     });   
 }

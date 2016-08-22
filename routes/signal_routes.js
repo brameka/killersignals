@@ -70,7 +70,17 @@ module.exports = function(app, express, router, auth, notifier){
     });
 
     router.get('/notify', function(req, res) {
+        notifier.notify();
+        res.json({ message: 'notification api' });
+    }); 
+
+    router.get('/send', function(req, res) {
         notifier.send();
+        res.json({ message: 'notification api' });
+    });   
+
+    router.get('/senda', function(req, res) {
+        notifier.sendtwo();
         res.json({ message: 'notification api' });
     });   
 

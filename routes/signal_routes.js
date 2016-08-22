@@ -21,12 +21,14 @@ module.exports = function(app, express, router, auth, notifier){
       var signalId = req.body.signalId;
       var status = req.body.status;
       var price = req.body.price;
+      var position = req.body.position;
       var timestamp = moment().valueOf();
 
       var signal = {
                       signalId: signalId,
                       name: name,
                       currency: currency,
+                      position: position,
                       description: description,
                       stoploss: stoploss,
                       takeprofit: takeprofit,

@@ -7,7 +7,7 @@ var request = require('request');
 module.exports = function(app){
 
   var notify = function(signal){
-    var notificationMessage = signal.position + " " + signal.name + "(" + signal.currency + ")";
+    var notificationMessage = signal.position + " (" + signal.currency + ") " + signal.name +
 
     /*var requestOptions = {
         proxy: 'http://bronsonr:Ch0wch0w555@proxy.perthmint.com.au:8080',

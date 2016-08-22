@@ -6,7 +6,7 @@ module.exports = function(){
     databaseURL: "https://killjoy-fa82b.firebaseio.com",
     serviceAccount: "./auth/Killjoy-14f8d081e9fd.json",
     databaseAuthVariableOverride: {
-      uid: "killjoyapi"
+      uid: "killjoy-api"
     }
   });
 

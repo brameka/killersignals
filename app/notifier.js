@@ -6,7 +6,8 @@ var request = require('request');
 
 module.exports = function(app){
 
-  var notify = function(){
+  var notify = function(signal){
+    var notificationMessage = signal.position + " " + signal.name + "(" + signal.currency + ")";
 
     /*var requestOptions = {
         proxy: 'http://bronsonr:Ch0wch0w555@proxy.perthmint.com.au:8080',
@@ -20,8 +21,8 @@ module.exports = function(app){
         data: { key1: 'msg1' },
         priority: 'high',
         notification: {
-            title: "Killjoy",
-            body: "Killjoy hell yeah"
+            title: "Killjoy Signal",
+            body: notificationMessage
         }
     });
 

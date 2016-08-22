@@ -45,19 +45,18 @@ module.exports = function(app, express, router, auth, notifier){
                       timestamp: timestamp
                    };*/
 
-      //notifier.send(signal);
       fireservice.save(id, signal);
-      
+      notifier.notify(signal);
       res.json(signal);
+
     });
 
     router.post('/signal/:id', auth, function(req, res) {
       var id = req.params.id;
       var data = {
-                    status: "fight"
+                    status: "win" //or loss
                 };
       fireservice.update(id, data);
-
 
       /*ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {
         snapshot.forEach(function(data) {
@@ -70,21 +69,8 @@ module.exports = function(app, express, router, auth, notifier){
     });
 
     router.get('/notify', function(req, res) {
-        notifier.notify();
+        //notifier.notify();
         res.json({ message: 'notification api' });
     }); 
-
-    router.get('/send', function(req, res) {
-        notifier.send();
-        res.json({ message: 'notification api' });
-    });   
-
-    router.get('/senda', function(req, res) {
-        notifier.sendtwo();
-        res.json({ message: 'notification api' });
-    });   
-
-    router.get('/beats', function(req, res) {
-        res.json({ message: 'beats api' });
-    });   
+  
 }

@@ -2,7 +2,7 @@ var gcm = require('node-gcm');
 
 module.exports = function(app){
 
-  var send = function(signal){
+  var send = function(){
     var message = new gcm.Message({
                 priority: 'high',
                 dryRun: true,
@@ -22,8 +22,8 @@ module.exports = function(app){
 
     //todo get device tokens
     var registrationTokens = [];
-    registrationTokens.push('regToken1');
-    registrationTokens.push('regToken2');
+    registrationTokens.push('c3AIG-9KzUQ:APA91bFVFuvv-eK72Ce3J3Nj1ONSwiFUs09DNsopXpwCAxdgvcpRpey4onZ_DUeKNxmT3aNv6Xt93h_l_6Vt9KkDd4Pref2VXf4O1gEwferg7XI67_3lg9OG8UWcoAl8df-BJA6wCcG2');
+    //registrationTokens.push('regToken2');
     
     //send to registrationTokens:
     /*sender.send(message, { 
@@ -36,16 +36,11 @@ module.exports = function(app){
       }
     });*/
 
-    sender.send(message, { 
-                  topic: "subscribers" 
-                }, 10, function (err, response) {
-                
-                if(err) {
-                    console.error(err);
-                } else {
-                    console.log(response);
-                }
+    sender.send(message, { registrationTokens: registrationTokens }, 10, function (err, response) {
+      if(err) console.error(err);
+      else    console.log(response);
     });
+
   }
 
   return {

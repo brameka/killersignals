@@ -11,9 +11,16 @@ module.exports = function(){
   });
 
   var save = function(id, signal){
+      firebase.database.enableLogging(true);
       var db = firebase.database();
       var ref = db.ref("/signals/" + id);
       ref.set(signal);
+  }
+
+  var save_result = function(result){
+      var db = firebase.database();
+      var ref = db.ref("/results");
+      ref.push().set(result);
   }
 
   var update = function(id, payload){
@@ -35,6 +42,7 @@ module.exports = function(){
 
   return {
     save: save,
-    update: update
+    update: update,
+    save_result: save_result
   }
 }

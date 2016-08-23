@@ -55,10 +55,29 @@ module.exports = function(app, express, router, auth, notifier){
 
     router.post('/signal/:id', auth, function(req, res) {
       var id = req.params.id;
+      var status = req.body.status;
+      var name = req.body.name;
+      var value = req.body.value;
+      var currency = req.body.currency;
+      var timestamp = moment().valueOf();
+
       var data = {
-                    status: "win" //or loss
+                    status: status
                 };
+
+      var result = {
+          id: id,
+          status: status,
+          name: name,
+          value: value,
+          currency: currency,
+          timestamp: timestamp
+      };
+      
       fireservice.update(id, data);
+
+      fireservice.save_result(result);
+      
 
       /*ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {
         snapshot.forEach(function(data) {

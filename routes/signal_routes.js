@@ -2,13 +2,13 @@ var _ = require('lodash');
 var moment = require('moment');
 var fireservice = require('../app/fireservice')();
 
-module.exports = function(app, express, router, auth, notifier){
+module.exports = function(app, express, router, notifier){
 
     router.get('/signals', function(req, res) {
       res.json({ message: 'signals api' });
     });
 
-    router.post('/signals', auth, function(req, res) {
+    router.post('/signals', function(req, res) {
     
       //console.log(req.body.arr[0]); //array
       
@@ -53,7 +53,7 @@ module.exports = function(app, express, router, auth, notifier){
 
     });
 
-    router.post('/signal/:id', auth, function(req, res) {
+    router.post('/signal/:id', function(req, res) {
       var id = req.params.id;
       var status = req.body.status;
       var name = req.body.name;

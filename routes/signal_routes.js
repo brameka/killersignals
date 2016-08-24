@@ -88,6 +88,11 @@ module.exports = function(app, express, router, auth, notifier){
 
       res.json({ message: id });
     });
+	
+	router.post('/sig', function(req, res) {
+        //notifier.notify();
+        res.json({ message: 'notification api' });
+    }); 
 
     router.get('/notify', function(req, res) {
         //notifier.notify();

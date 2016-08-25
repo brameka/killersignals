@@ -37,7 +37,7 @@ module.exports = function(app, express, router, notifier){
                       timestamp: timestamp
                     };
 
-      if(name){
+      if(name=="Dagger"){
         fireservice.save(id, signal);
         notifier.notify(signal);
         res.json(signal);

@@ -37,20 +37,12 @@ module.exports = function(app, express, router, notifier){
                       timestamp: timestamp
                     };
 
-      /*var signal = {};
-      signal[id] = {    
-                      signal: sig,
-                      currency: currency,
-                      description: description,
-                      stoploss: stoploss,
-                      takeprofit: takeprofit,
-                      timestamp: timestamp
-                   };*/
-
-      //fireservice.save(id, signal);
-      notifier.notify(signal);
-      res.json(signal);
-
+      if(signalId){
+        notifier.notify(signal);
+        res.json(signal);
+      }else{
+        console.log("invalid signal");
+      }
     });
 
     router.post('/signal/:id', function(req, res) {

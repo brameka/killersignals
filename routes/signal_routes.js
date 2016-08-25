@@ -42,6 +42,7 @@ module.exports = function(app, express, router, notifier){
         res.json(signal);
       }else{
         console.log("invalid signal");
+        res.json("invalid signal");
       }
     });
 

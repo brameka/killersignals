@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "killjoy-fa82b",
+  "private_key_id": "437faf4ebcd1750552856beea105f7fba08c4fc3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC17QkAD0jar6cd\nhGiauCGgu1MEp1PcLphfE6fwp1/6wBqSlu37lIvp0oHjS0YdU4wKIvU0pZiysYCs\nosy01bLOWSgE97c7Wbg1+TY25nd+XjMPFcgRwRiQHGqczMrBBpn7AEpM2N2Htf+1\nArtqC0IY/BN67s4P6hL7Ym0ecacBzDv6/LKpRSfwpOkCBpuoG2W6bCr3AVSfZnmT\nsAgOQETHBSrTpXEYPFtYPLtD802E01t+fvOYuKPCh60s1uGtihKbsNTBbNZgrzr5\n1sn+9SBSrj6Cw3/dUv4l7Q4YB2VZMGMzok/ohGZKBny8JYcz/Y909PFgNxK4YShE\nQX6TSGdvAgMBAAECggEBAKkphmPq0nieOktlEotDSemWJaS/HmgvX3mQ4mkQiVu1\nA0BpXVLAlrTOC/7YwJKGXEIUrWLN1EXcbWSZYLWJu+DJ4D92Q4fJblOprnKwLE5x\nsxKE02tG3NsrwSqZ9rIzvDw70drREHSfk+yxZKk/XK+0vTxjD3KW2h2sMQDM91jg\nB1WCygPOlF0an2BkXLk4r7WgGyAN3XlUDsASH3p8Y09YaoJWjPx3vDpQxwNzdl1p\ngug01NxXUC8wYuqQWtf/up5AdcWAkde+LRcOyL6gQvzCmEPMTgGKmV5I/Q/MZtt8\n3qZgA5XN87THIQx5S1vPmkyB/nvfY4TWDbVpOTEzU3kCgYEA7mRL0B85zw2f/DDq\nwma69bSkGwEY6MJD4UpwqwbOSA7CcTlznfgtyVoGDaHdtVDdeAbLuZGBq7NAu9kF\nGMBoiye/WbdrARqofrir1TP5ZjEMa8HVd9uoZqBXF0D8B2R05mL7eUFT3xrRrclR\nd6VokizGv86y5cAI5PSb3d/PuTMCgYEAw10Jd7HWUGXnOgrVsmx+RdgRXYNchAw2\nb3x5Xg9ZBrK1Sw1IaFImXqp7FJrtnXnEiw1M3M4G3tOq91j5DaocezDEGRP0GU1N\nXtERFFGwp23EZqQo1RifMwlHbTB1hpiesaDFYR3CIlNaCaZS7NTp+2MKN4ruB2NA\na6Abhz3fcNUCgYBZZjFsJhmmxURG7g1Lw/y+4fRc0CeIOjn8hc8ExDOdoDNZBKOQ\nDR8WkHUOrbIYKfAz79B8kc2gF0PibjtUEeviq5A90+QD8PxZMWX3OVuA8EnpKzKj\nlTNs8RpX9R3Oo+SW9W27Bj2uwD77vjCX/ubdUn9iNOCv+jkbq4O8TA95MwKBgQCL\nJf4zUeh7FUnvjn4M+rep2a7ssz63EtfG6pqrgzT+z1TPoyNaooCP1s+ZqovqKSvz\nesKvVtOP7KWOTcH+mJZ2rBJQZmTrjKK6ESEgHts7NbS5At3Ogh4KROap/+UFvDjz\n/bX4aTC4MDQmQWA5LaGGm1FQpFTL0Ea3Ia/Z0RkQDQKBgCGCt7KQLMqFU6bPuvk8\n7LiS6HjccR8KrgUxvOAhdeVLaxgLYh+4CW6S0DZIF0W4X8CZMfpdKI11YrztXKI3\noTsGNXlWSvx5n6t+ODRlRoJzubIRt+BCuqvmGIQSnI2Sk6mvXJW5x3n0b/qqtB0W\nKLnrJi7Xkx4ZdzM2TF0SEw0y\n-----END PRIVATE KEY-----\n",
+  "client_email": "killjoyapi@killjoy-fa82b.iam.gserviceaccount.com",
+  "client_id": "105119696631048086199",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/killjoyapi%40killjoy-fa82b.iam.gserviceaccount.com"
+}

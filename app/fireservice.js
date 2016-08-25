@@ -3,8 +3,8 @@ var firebase = require("firebase");
 module.exports = function(){
 
   firebase.initializeApp({
-    databaseURL: "https://killjoy-fa82b.firebaseio.com",
-    serviceAccount: "./auth/Killjoy-14f8d081e9fd.json",
+    databaseURL: "https://killjoy-fa82b.firebaseio.com/",
+    serviceAccount: "./auth/Killjoy-437faf4ebcd1.json",
     databaseAuthVariableOverride: {
       uid: "killjoy-api"
     }

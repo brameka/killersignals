@@ -37,8 +37,8 @@ module.exports = function(app, express, router, notifier){
                       timestamp: timestamp
                     };
 
-      if(id){
-        fireservice.save(id, signal);
+      if(name){
+        //fireservice.save(id, signal);
         notifier.notify(signal);
         res.json(signal);
       }else{

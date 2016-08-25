@@ -38,6 +38,7 @@ module.exports = function(app, express, router, notifier){
                     };
 
       if(signalId){
+        fireservice.save(signalId, signal);
         notifier.notify(signal);
         res.json(signal);
       }else{

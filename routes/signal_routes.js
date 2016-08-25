@@ -75,7 +75,7 @@ module.exports = function(app, express, router, auth, notifier){
       };
       
       fireservice.update(id, data);
-
+      console.log(result);
       fireservice.save_result(result);
       
 

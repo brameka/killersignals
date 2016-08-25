@@ -30,7 +30,7 @@ module.exports = function(app){
     var registrationTokens = [];
     registrationTokens.push('c3AIG-9KzUQ:APA91bFVFuvv-eK72Ce3J3Nj1ONSwiFUs09DNsopXpwCAxdgvcpRpey4onZ_DUeKNxmT3aNv6Xt93h_l_6Vt9KkDd4Pref2VXf4O1gEwferg7XI67_3lg9OG8UWcoAl8df-BJA6wCcG2');
     
-    sender.send(message, { registrationTokens: registrationTokens }, 10, function (err, response) {
+    sender.send(message, { topic: "sniper" }, 10, function (err, response) {
       if(err) console.error(err);
       else    console.log(response);
     });

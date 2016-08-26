@@ -38,10 +38,11 @@ module.exports = function(app, express, router, notifier){
                       stoploss: parseFloat(stoploss,5),
                       takeprofit: parseFloat(takeprofit,5),
                       status: status,
-                      timestamp: timestamp,
-                      priority: priority,
                       image: image,
-                      takeprofit: parseFloat(takeprofit)
+                      takeprofit: parseFloat(takeprofit),
+                      result: result,
+                      timestamp: timestamp,
+                      priority: priority
                     };
 
       fireservice.save(id, signal);

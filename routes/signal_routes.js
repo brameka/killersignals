@@ -38,8 +38,8 @@ module.exports = function(app, express, router, notifier){
                       takeprofit: parseFloat(takeprofit,5),
                       status: status,
                       timestamp: timestamp,
-                      priority: priority
-                      image: image,
+                      priority: priority,
+                      image: image
                     };
 
       fireservice.save(id, signal);

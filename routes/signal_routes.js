@@ -12,7 +12,7 @@ module.exports = function(app, express, router, notifier){
 
       var id = req.body.id;
       var name = req.body.name;
-      var profile_id = req.body.profile_id;
+      var profile = req.body.profile;
       var currency = req.body.currency;
       var stoploss = req.body.stoploss;
       var takeprofit = req.body.takeprofit;
@@ -30,7 +30,7 @@ module.exports = function(app, express, router, notifier){
 
       var signal = {
                       name: name,
-                      profile_id: profile,
+                      profile: profile,
                       currency: currency,
                       position: position,
                       price: parseFloat(price,5),

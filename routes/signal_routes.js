@@ -39,7 +39,7 @@ module.exports = function(app, express, router, notifier){
                       stoploss: parseFloat(stoploss,5),
                       takeprofit: parseFloat(takeprofit,5),
                       status: status,
-                      image: image+token,
+                      image: image+"&token="+token,
                       result: result,
                       timestamp: timestamp,
                       priority: priority

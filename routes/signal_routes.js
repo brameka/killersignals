@@ -39,7 +39,6 @@ module.exports = function(app, express, router, notifier){
                       takeprofit: parseFloat(takeprofit,5),
                       status: status,
                       image: image,
-                      takeprofit: parseFloat(takeprofit),
                       result: result,
                       timestamp: timestamp,
                       priority: priority

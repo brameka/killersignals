@@ -68,7 +68,8 @@ module.exports = function(app, express, router, notifier){
           name: name,
           value: value,
           currency: currency,
-          timestamp: timestamp
+          timestamp: timestamp,
+          priority: priority
       };
       
       fireservice.update(id, data);

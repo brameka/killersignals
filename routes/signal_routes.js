@@ -20,6 +20,7 @@ module.exports = function(app, express, router, notifier){
       var price = req.body.price;
       var position = req.body.position;
       var image = req.body.image;
+      var result = req.body.result;
       var timestamp = moment().valueOf();
       var priority = -moment().valueOf();
 
@@ -39,7 +40,8 @@ module.exports = function(app, express, router, notifier){
                       status: status,
                       timestamp: timestamp,
                       priority: priority,
-                      image: image
+                      image: image,
+                      takeprofit: parseFloat(takeprofit)
                     };
 
       fireservice.save(id, signal);

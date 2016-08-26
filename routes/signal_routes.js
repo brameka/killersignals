@@ -9,42 +9,36 @@ module.exports = function(app, express, router, notifier){
     });
 
     router.post('/signals', function(req, res) {
-    
-      //console.log(req.body.arr[0]); //array
-      
+
       var id = req.body.id;
       var name = req.body.name;
       var currency = req.body.currency;
-      var description = req.body.description;
       var stoploss = req.body.stoploss;
       var takeprofit = req.body.takeprofit;
-      var signalId = req.body.signalId;
       var status = req.body.status;
       var price = req.body.price;
       var position = req.body.position;
       var timestamp = moment().valueOf();
 
+      if(!id || !name || !currency || !stoploss || !takeprofit || !status || !price || !position || !timestamp){
+          console.log("invalid signal");
+          res.json("invalid signal");
+      }
+
       var signal = {
-                      signalId: signalId,
                       name: name,
                       currency: currency,
                       position: position,
-                      description: description,
-                      stoploss: stoploss,
-                      takeprofit: takeprofit,
+                      price: parseFloat(price,5),
+                      stoploss: parseFloat(stoploss,5),
+                      takeprofit: parseFloat(takeprofit,5),
                       status: status,
-                      price: price,
                       timestamp: timestamp
                     };
 
-      if(name){
-        fireservice.save(id, signal);
-        notifier.notify(signal);
-        res.json(signal);
-      }else{
-        console.log("invalid signal");
-        res.json("invalid signal");
-      }
+      fireservice.save(id, signal);
+      notifier.notify(signal);
+      res.json(signal);
     });
 
     router.post('/signal/:id', function(req, res) {
@@ -83,14 +77,8 @@ module.exports = function(app, express, router, notifier){
       res.json({ message: id });
     });
 	
-	router.post('/sig', function(req, res) {
-        //notifier.notify();
-        res.json({ message: 'notification api' });
-    }); 
-
     router.get('/notify', function(req, res) {
         //notifier.notify();
         res.json({ message: 'notification api' });
     }); 
-  
 }

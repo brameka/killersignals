@@ -45,8 +45,8 @@ module.exports = function(app, express, router, notifier){
                       priority: priority
                     };
 
-      fireservice.save(id, signal);
-      notifier.notify(signal);
+      //fireservice.save(id, signal);
+      //notifier.notify(signal);
       res.json(signal);
     });
 

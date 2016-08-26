@@ -12,7 +12,7 @@ module.exports = function(app, express, router, notifier){
 
       var id = req.body.id;
       var name = req.body.name;
-      var profile = req.body.profile;
+      var profile_id = req.body.profile_id;
       var currency = req.body.currency;
       var stoploss = req.body.stoploss;
       var takeprofit = req.body.takeprofit;
@@ -21,6 +21,7 @@ module.exports = function(app, express, router, notifier){
       var position = req.body.position;
       var image = req.body.image;
       var timestamp = moment().valueOf();
+      var priority = -moment().valueOf();
 
       if(!id || !name || !profile || !currency || !stoploss || !takeprofit || !status || !price || !position || !timestamp){
           console.log("invalid signal");
@@ -29,7 +30,7 @@ module.exports = function(app, express, router, notifier){
 
       var signal = {
                       name: name,
-                      profile: profile,
+                      profile_id: profile,
                       currency: currency,
                       position: position,
                       price: parseFloat(price,5),
@@ -37,7 +38,8 @@ module.exports = function(app, express, router, notifier){
                       takeprofit: parseFloat(takeprofit,5),
                       status: status,
                       timestamp: timestamp,
-                      image: image
+                      priority: priority
+                      image: image,
                     };
 
       fireservice.save(id, signal);

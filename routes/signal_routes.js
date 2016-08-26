@@ -74,9 +74,9 @@ module.exports = function(app, express, router, notifier){
           priority: -timestamp
       };
       
-      //fireservice.update(id, data);
-      //console.log(result);
-      //fireservice.save_result(result);
+      fireservice.update(id, data);
+      console.log(result);
+      fireservice.save_result(result);
       
 
       /*ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {

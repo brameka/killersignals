@@ -21,6 +21,7 @@ module.exports = function(app, express, router, notifier){
       var position = req.body.position;
       var image = req.body.image;
       var result = req.body.result;
+      var token = req.body.token;
       var timestamp = moment().valueOf();
       var priority = -moment().valueOf();
 
@@ -38,7 +39,7 @@ module.exports = function(app, express, router, notifier){
                       stoploss: parseFloat(stoploss,5),
                       takeprofit: parseFloat(takeprofit,5),
                       status: status,
-                      image: image,
+                      image: image+token,
                       result: result,
                       timestamp: timestamp,
                       priority: priority

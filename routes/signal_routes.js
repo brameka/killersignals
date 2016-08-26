@@ -10,6 +10,8 @@ module.exports = function(app, express, router, notifier){
 
     router.post('/signals', function(req, res) {
 
+      var action = req.body.action;
+
       var id = req.body.id;
       var name = req.body.name;
       var profile = req.body.profile;
@@ -72,9 +74,9 @@ module.exports = function(app, express, router, notifier){
           priority: priority
       };
       
-      fireservice.update(id, data);
-      console.log(result);
-      fireservice.save_result(result);
+      //fireservice.update(id, data);
+      //console.log(result);
+      //fireservice.save_result(result);
       
 
       /*ref.orderByChild("id").equalTo(id).once("value", function(snapshot) {
@@ -84,7 +86,7 @@ module.exports = function(app, express, router, notifier){
         });
       });*/
 
-      res.json({ message: id });
+      res.json({ message: result });
     });
 	
     router.get('/notify', function(req, res) {

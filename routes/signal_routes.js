@@ -10,6 +10,8 @@ module.exports = function(app, express, router, notifier){
 
     router.post('/signals', function(req, res) {
 
+      var action = req.body.action;
+
       var id = req.body.id;
       var name = req.body.name;
       var profile = req.body.profile;
@@ -21,6 +23,7 @@ module.exports = function(app, express, router, notifier){
       var position = req.body.position;
       var image = req.body.image;
       var result = req.body.result;
+      var token = req.body.token;
       var timestamp = moment().valueOf();
       var priority = -moment().valueOf();
 
@@ -38,8 +41,7 @@ module.exports = function(app, express, router, notifier){
                       stoploss: parseFloat(stoploss,5),
                       takeprofit: parseFloat(takeprofit,5),
                       status: status,
-                      image: image,
-                      takeprofit: parseFloat(takeprofit),
+                      image: image+"&token="+token,
                       result: result,
                       timestamp: timestamp,
                       priority: priority
@@ -68,7 +70,8 @@ module.exports = function(app, express, router, notifier){
           name: name,
           value: value,
           currency: currency,
-          timestamp: timestamp
+          timestamp: timestamp,
+          priority: -timestamp
       };
       
       fireservice.update(id, data);
@@ -83,7 +86,7 @@ module.exports = function(app, express, router, notifier){
         });
       });*/
 
-      res.json({ message: id });
+      res.json({ message: result });
     });
 	
     router.get('/notify', function(req, res) {

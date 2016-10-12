@@ -13,6 +13,7 @@ module.exports = function(){
   var save = function(id, signal){
       firebase.database.enableLogging(true);
       var db = firebase.database();
+      console.log("saving to firebase...");
       var ref = db.ref("/signals/" + id);
       ref.set(signal);
   }

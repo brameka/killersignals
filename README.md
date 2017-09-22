@@ -1,2 +1,2 @@
-# killjoy
-killjoy api - publishing weapons of mass attraction
+# Killer
+Killer Signals Hero Bots - publishing weapons of mass attraction

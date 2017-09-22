@@ -8,13 +8,13 @@
 #property version   "1.00"
 #property description "Thor - Hammer Throw EA"
 #property strict
-//+------------------------------------------------------------------+
-//| Expert initialization function                                   |
-//+------------------------------------------------------------------+
-
 #include <stdlib.mqh>
 #include <stderror.mqh>
 
+
+//+------------------------------------------------------------------+
+//| Externals                                   |
+//+------------------------------------------------------------------+
 extern double LongOpenRsiLength = 6;
 extern double LongOpenRsiLevel = 42;
 
@@ -29,23 +29,20 @@ extern double ShortCloseRsiLevel = 0;
 
 extern double StopLossPips = 100;
 
-double Multiplier; //initialized in OnInit
-
+extern int MagicNumber = 1369462;
 
 int LotDigits;
-int MagicNumber = 1369462;
+double Multiplier;
 double MM_Percent = 1;
 int MaxSlippage = 3; //adjusted in OnInit
-double MaxSL = 10;
-bool crossed[4]; //initialized to true, used in function Cross
+
 int MaxOpenTrades = 1;
 int MaxLongTrades = 1000;
 int MaxShortTrades = 1000;
 int MaxPendingOrders = 1000;
-bool Hedging = false;
+
 int OrderRetry = 5; //# of retries if sending order returns error
 int OrderWait = 5; //# of seconds to wait if sending order returns error
-
 
 double MM_Size(double SL) //Risk % per trade, SL = relative Stop Loss to calculate risk
 {
@@ -66,13 +63,6 @@ double MM_Size_BO() //Risk % per trade for Binary Options
    double tickvalue = MarketInfo(Symbol(), MODE_TICKVALUE);
    double ticksize = MarketInfo(Symbol(), MODE_TICKSIZE);
    return(MM_Percent * 1.0 / 100 * AccountBalance());
-}
-
-bool Cross(int i, bool condition) //returns true if "condition" is true and was false in the previous call
-{
-   bool ret = condition && !crossed[i];
-   crossed[i] = condition;
-   return(ret);
 }
 
 void ShowAlert(string type, string message)
@@ -230,7 +220,6 @@ int OnInit()
    else if(LotStep >= 0.1) LotDigits = 1;
    else if(LotStep >= 0.01) LotDigits = 2;
    else LotDigits = 3;
-   MaxSL = MaxSL * Multiplier;
    int i;
 
    //initialize crossed

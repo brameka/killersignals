@@ -6,7 +6,7 @@
 #property copyright "Copyright 2016, Killersignals"
 #property link      "https://www.killersignals.com"
 #property version   "1.00"
-#property description ""
+#property description "Thor - Hammer Throw EA"
 #property strict
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
@@ -27,6 +27,10 @@ extern double ShortOpenRsiLevel = 60;
 extern double ShortCloseRsiLength = 0;
 extern double ShortCloseRsiLevel = 0;
 
+extern double StopLossPips = 100;
+
+double Multiplier; //initialized in OnInit
+
 
 int LotDigits;
 int MagicNumber = 1369462;
@@ -41,7 +45,7 @@ int MaxPendingOrders = 1000;
 bool Hedging = false;
 int OrderRetry = 5; //# of retries if sending order returns error
 int OrderWait = 5; //# of seconds to wait if sending order returns error
-double myPoint; //initialized in OnInit
+
 
 double MM_Size(double SL) //Risk % per trade, SL = relative Stop Loss to calculate risk
 {
@@ -100,62 +104,6 @@ int TradesCount(int type) //returns # of open trades for order type, current sym
    return(result);
 }
 
-int OrderSend(int type, double volume, string ordername) //send order, return ticket ("price" is irrelevant for market orders)
-{
-   if(!IsTradeAllowed()) return(-1);
-   int ticket = -1;
-   int retries = 0;
-   int err;
-   
-   int long_trades = TradesCount(OP_BUY);
-   int short_trades = TradesCount(OP_SELL);
-   int long_pending = TradesCount(OP_BUYLIMIT) + TradesCount(OP_BUYSTOP);
-   int short_pending = TradesCount(OP_SELLLIMIT) + TradesCount(OP_SELLSTOP);
-   
-   //test Hedging
-   if(!Hedging && ((type % 2 == 0 && short_trades + short_pending > 0) || (type % 2 == 1 && long_trades + long_pending > 0)))
-   {
-      return(-1);
-   }
-
-   //test maximum trades
-   if((type % 2 == 0 && long_trades >= MaxLongTrades)
-   || (type % 2 == 1 && short_trades >= MaxShortTrades)
-   || (long_trades + short_trades >= MaxOpenTrades)
-   || (type > 1 && long_pending + short_pending >= MaxPendingOrders))
-   {
-      return(-1);
-   }
-
-   while(IsTradeContextBusy()) Sleep(100);
-
-   RefreshRates();
-   
-   double price;
-   if(type == OP_BUY)
-      price = Ask;
-   else if(type == OP_SELL)
-      price = Bid;
-   else if(price < 0)
-   {
-      return(-1);
-   }
-
-   int clr = (type % 2 == 1) ? clrRed : clrBlue;
-   while(ticket < 0 && retries < OrderRetry + 1)
-   {
-      ticket = OrderSend(Symbol(), type, NormalizeDouble(volume, LotDigits), NormalizeDouble(price, Digits()), MaxSlippage, 0, 0, ordername, MagicNumber, 0, clr);
-      
-      if(ticket < 0)
-      {
-         err = GetLastError();
-         Sleep(OrderWait*1000);
-      }
-      retries++;
-   }
-   return(ticket);
-}
-
 int myOrderModify(int ticket, double SL, double TP) //modify SL and TP (absolute price), zero targets do not modify
 {
    if(!IsTradeAllowed()) return(-1);
@@ -204,6 +152,7 @@ int myOrderModify(int ticket, double SL, double TP) //modify SL and TP (absolute
 }
 
 // close open orders for current symbol, magic number and "type" (OP_BUY or OP_SELL)
+/*
 void CloseOrder(int type, int volumepercent, string ordername)
 {
     if(!IsTradeAllowed()) return;
@@ -244,6 +193,7 @@ void CloseOrder(int type, int volumepercent, string ordername)
 
     if(success) ShowAlert("order", "Orders closed"+ordername_+": "+typestr[type]+" "+Symbol()+" Magic #"+MagicNumber);
 }
+*/
 
 void TrailingStopBE(int type, double profit) //set Stop Loss to open price if in profit
 {
@@ -266,11 +216,11 @@ void TrailingStopBE(int type, double profit) //set Stop Loss to open price if in
 //+------------------------------------------------------------------+
 int OnInit()
 {
-   //initialize myPoint
-   myPoint = Point();
+   //initialize Multiplier
+   Multiplier = Point();
    if(Digits() == 5 || Digits() == 3)
    {
-      myPoint *= 10;
+      Multiplier *= 10;
       MaxSlippage *= 10;
    }
 
@@ -280,7 +230,7 @@ int OnInit()
    else if(LotStep >= 0.1) LotDigits = 1;
    else if(LotStep >= 0.01) LotDigits = 2;
    else LotDigits = 3;
-   MaxSL = MaxSL * myPoint;
+   MaxSL = MaxSL * Multiplier;
    int i;
 
    //initialize crossed
@@ -345,79 +295,93 @@ bool ShortSignal (int length, int level) {
 //+------------------------------------------------------------------+
 void OnTick()
 {
-  double price;
-  double tradeSize = 0.1;
-  int ticket;
-  
-  // TrailingStopBE(OP_BUY, 12 * myPoint); //Trailing Stop = go break even
-  // TrailingStopBE(OP_SELL, 12 * myPoint); //Trailing Stop = go break even
+  // TrailingStopBE(OP_BUY, 12 * Multiplier); //Trailing Stop = go break even
+  // TrailingStopBE(OP_SELL, 12 * Multiplier); //Trailing Stop = go break even
 
   // Close Signals
   if(LongSignal(LongCloseRsiLength, LongCloseRsiLevel)){
-    Print("Short Close Signal");
-    //CloseOrder(OP_BUY, 100, "");
+    CloseOrder(OP_BUY);
   }
 
   if(ShortSignal(ShortCloseRsiLength, ShortCloseRsiLevel)){
-    Print("Short Close Signal");
-    //CloseOrder(OP_SELL, 100, "");
+    CloseOrder(OP_SELL);
   }
 
   // Open Signals
   if(LongOpenSignal(LongOpenRsiLength, LongOpenRsiLevel)){
-    Send(OP_BUY);
-    //RefreshRates();
-    //price = Ask;
-    //ticket = OrderSend(OP_BUY, tradeSize, "");
+    int ticket = OpenOrder(OP_BUY);
   }
 
   if(ShortOpenSignal(ShortOpenRsiLength, ShortOpenRsiLevel)){
-    Send(OP_SELL);
-    //RefreshRates();
-    //price = Bid;
-    //ticket = OrderSend(OP_SELL, price, TradeSize, "");
+    int ticket = OpenOrder(OP_SELL);
   }
 
 }
 
-int Send(int type)
+int OpenOrder(int type)
 {
-   int long_trades = TradesCount(OP_BUY);
-   int short_trades = TradesCount(OP_SELL);
-   int long_pending = TradesCount(OP_BUYLIMIT) + TradesCount(OP_BUYSTOP);
-   int short_pending = TradesCount(OP_SELLLIMIT) + TradesCount(OP_SELLSTOP);
-   
-   //test Hedging
-   if(!Hedging && ((type % 2 == 0 && short_trades + short_pending > 0) || (type % 2 == 1 && long_trades + long_pending > 0)))
+   if (!IsTradeAllowed()) return(-1);
+   if ((type == OP_BUY && long_trades >= MaxLongTrades) || (type == OP_SELL && short_trades >= MaxShortTrades))
    {
       return(-1);
    }
 
-   //test maximum trades
-   if((type % 2 == 0 && long_trades >= MaxLongTrades)
-   || (type % 2 == 1 && short_trades >= MaxShortTrades)
-   || (long_trades + short_trades >= MaxOpenTrades)
-   || (type > 1 && long_pending + short_pending >= MaxPendingOrders))
-   {
-      return(-1);
-   }
-   double price = (type == OP_SELL) ? Ask : Bid;
-   double spread = MarketInfo(Symbol(),MODE_SPREAD);
-   double pips = 50*Point;
-   double sl = (type == OP_SELL) ? price+pips : price-pips ;
-   double tp = (type == OP_SELL) ? price-pips-(spread*Point) : price+pips+(spread*Point);
-   
-   
-   //double volume = NormalizeDouble(OrderLots()*volumepercent * 1.0 / 100, LotDigits);
-   
+   int ticket = -1;
+   int retries = 0;
+   int error = 0;
+   int long_trades = TradesCount(OP_BUY);
+   int short_trades = TradesCount(OP_SELL);
    int colour = (type == OP_SELL) ? clrRed : clrBlue;
-   int ticket = OrderSend(Symbol(), type, NormalizeDouble(0.1, LotDigits), NormalizeDouble(price, Digits()), MaxSlippage, sl, tp, "Buy Order", MagicNumber, 0, colour);
+   double price = (type == OP_SELL) ? Bid : Ask;
+   double spread = MarketInfo(Symbol(), MODE_SPREAD);
+   double pips = StopLossPips* Multiplier;
+   double sl = (type == OP_SELL) ? price+pips : price-pips;
+   double tp = (type == OP_SELL) ? price-pips-(spread*Point) : price+pips+(spread*Point);
+   double volume = NormalizeDouble(OrderLots() * (1.0 / 100), LotDigits);
+   string name = (type == OP_SELL) ? "Thor Sell Order" : "Thor Buy Order";
    
-   if(ticket < 0)
+   while(IsTradeContextBusy()) Sleep(100);
+   RefreshRates();
+   
+   while(ticket < 0 && retries < OrderRetry + 1)
    {
-      Print("OrderSend failed with error #",GetLastError());
+      ticket = OrderSend(Symbol(), type, NormalizeDouble(volume, LotDigits), NormalizeDouble(price, Digits()), MaxSlippage, sl, tp, name, MagicNumber, 0, colour);
+      
+      if(ticket < 0)
+      {
+         error = GetLastError();
+         Sleep(OrderWait*1000);
+      }
+      retries++;
    }
-   
    return(ticket);
+}
+
+void CloseOrder(int type)
+{
+  bool success = false;
+  int total = OrdersTotal();
+
+  for(int i = total-1; i >= 0; i--)
+  {
+    while(IsTradeContextBusy()) Sleep(100);
+
+    if(!OrderSelect(i, SELECT_BY_POS, MODE_TRADES)) continue;
+    if(OrderMagicNumber() != MagicNumber || OrderSymbol() != Symbol() || OrderType() != type) continue;
+
+    while(IsTradeContextBusy()) Sleep(100);
+
+    RefreshRates();
+
+    double price = (type == OP_SELL) ? Ask : Bid;
+    double volume = NormalizeDouble(OrderLots() * (1.0 / 100), LotDigits);
+    if (NormalizeDouble(volume, LotDigits) == 0) continue;
+    success = OrderClose(OrderTicket(), volume, NormalizeDouble(price, Digits()), MaxSlippage, clrWhite);
+    if(!success)
+    {
+      err = GetLastError();
+      ShowAlert("error", "OrderClose"+ordername_+" failed; error #"+err+" "+ErrorDescription(err));
+    }
+  }
 }
 
